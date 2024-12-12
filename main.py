@@ -1,33 +1,26 @@
+def parse_cook_book(file_path):
+
+    cook_book = {}
+
+    with open(file_path, 'r', encoding='utf-8') as file:
+        while line := file.readline().strip():
+            dish_name = line
+            num_ingredients = int(file.readline().strip())
+            ingredients = []
+            for _ in range(num_ingredients):
+                ingredient_data = file.readline().strip().split(' | ')
+                ingredients.append({
+                    'ingredient_name': ingredient_data[0],
+                    'quantity': int(ingredient_data[1]),
+                    'measure': ingredient_data[2]
+                })
+            cook_book[dish_name] = ingredients
+            file.readline()  # Пропустить пустую строку
+
+    return cook_book
+
+
 def get_shop_list_by_dishes(dishes, person_count):
-    """
-    Функция принимает список блюд и количество персон,
-    возвращает словарь с суммарным количеством ингредиентов.
-    """
-    cook_book = {
-        'Омлет': [
-            {'ingredient_name': 'Яйцо', 'quantity': 2, 'measure': 'шт.'},
-            {'ingredient_name': 'Молоко', 'quantity': 100, 'measure': 'мл'},
-            {'ingredient_name': 'Помидор', 'quantity': 2, 'measure': 'шт'}
-        ],
-        'Утка по-пекински': [
-            {'ingredient_name': 'Утка', 'quantity': 1, 'measure': 'шт'},
-            {'ingredient_name': 'Вода', 'quantity': 2, 'measure': 'л'},
-            {'ingredient_name': 'Мед', 'quantity': 3, 'measure': 'ст.л'},
-            {'ingredient_name': 'Соевый соус', 'quantity': 60, 'measure': 'мл'}
-        ],
-        'Запеченный картофель': [
-            {'ingredient_name': 'Картофель', 'quantity': 1, 'measure': 'кг'},
-            {'ingredient_name': 'Чеснок', 'quantity': 3, 'measure': 'зубч'},
-            {'ingredient_name': 'Сыр гауда', 'quantity': 100, 'measure': 'г'},
-        ],
-        'Фахитос': [
-            {'ingredient_name': 'Говядина', 'quantity': 500, 'measure': 'г'},
-            {'ingredient_name': 'Перец сладкий', 'quantity': 1, 'measure': 'шт'},
-            {'ingredient_name': 'Лаваш', 'quantity': 2, 'measure': 'шт'},
-            {'ingredient_name': 'Винный уксус', 'quantity': 1, 'measure': 'ст.л'},
-            {'ingredient_name': 'Помидор', 'quantity': 2, 'measure': 'шт'},
-        ]
-    }
 
     shop_list = {}
 
@@ -48,6 +41,8 @@ def get_shop_list_by_dishes(dishes, person_count):
     return shop_list
 
 
+file_path = 'recipes.txt'
+cook_book = parse_cook_book(file_path)
 dishes = ['Запеченный картофель', 'Омлет']
 person_count = 2
 result = get_shop_list_by_dishes(dishes, person_count)
